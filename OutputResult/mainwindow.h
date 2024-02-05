@@ -7,8 +7,7 @@
 #include <QStringListModel>
 #include <QStandardItemModel>
 #include <QDebug>
-
-
+#include <QTimer>
 
 
 QT_BEGIN_NAMESPACE
@@ -25,6 +24,7 @@ private:
     };
 private:
     Data parseDatagram(QByteArray receivedData);
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -32,12 +32,12 @@ public:
 private slots:
     void receiveData();
     QByteArray readDatagram();
-
-
+    //void startTimer();
 private:
     Ui::MainWindow *ui;
     QUdpSocket *socket;
     QStandardItemModel* model;
+    QTimer* timer;
 
 };
 #endif // MAINWINDOW_H

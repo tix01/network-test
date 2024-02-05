@@ -25,24 +25,10 @@ void MainWindow::receiveData() {
         QByteArray receivedData = readDatagram();
         Data data = parseDatagram(receivedData);
         QStandardItem *item;
-        if(data.value == "stop") {
-            item = new QStandardItem(data.value + " " + data.time);
-            model->appendRow(item);
-            return;
-        }
+        qDebug() << data.value << data.time;
+        item = new QStandardItem(data.value + " " + data.time);
+        model->appendRow(item);
 
-        int i = 0;
-        int numberRecord = data.value.toInt();
-        while (i < numberRecord) {
-            if (socket->hasPendingDatagrams()) {
-                receivedData = readDatagram();
-                data = parseDatagram(receivedData);
-                qDebug() << data.value << data.time;
-                item = new QStandardItem(data.value + " " + data.time);
-                model->appendRow(item);
-                i++;
-            }
-        }
     }
 }
 

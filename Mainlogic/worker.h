@@ -11,7 +11,7 @@
 class Worker
 {
 public:
-    Worker();
+    Worker() = default;
     void start(int n);
     void stop();
 private:

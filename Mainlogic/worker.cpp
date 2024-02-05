@@ -1,10 +1,5 @@
 #include "worker.h"
 
-Worker::Worker()
-{
-
-}
-
 void Worker::start(int n) {
     n_ = n;
     running_ = true;
@@ -23,13 +18,11 @@ void Worker::work() {
     std::stack<int, std::vector<int>> container;
     std::mutex m;
     for (int i = 0; i < n_ && running_; i++) {
-        int value = rand() % 100;
+        int value = i;
         m.lock();
         container.push(value);
-        //std::cout << value << '\n';
         m.unlock();
     }
-
     for (int i = 0; i < n_ && running_; i++) {
         m.lock();
         if (!container.empty()) {
@@ -43,6 +36,7 @@ void Worker::work() {
 
             m.lock();
             socket_.writeDatagram(byteArray, QHostAddress::LocalHost, 4321);
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
             m.unlock();
         } else {
             m.unlock();
